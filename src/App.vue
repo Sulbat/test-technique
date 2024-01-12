@@ -4,9 +4,9 @@
           <button
           @click="connectWallet"
           v-if="isMetamaskSupported"
-          class="px-4 py-2 rounded bg-gradient-to-r from-orange-500 to-orange-600 text-gray-50 font-semibold"
+          class="px-4 py-2 rounded bg-gradient-to-r from-blue-500 to-blue-600 text-gray-50 font-semibold"
           >
-          metamask login
+          Metamask Login
           </button>
           <Title v-else>Please Install Metamask Extension</Title>
 
