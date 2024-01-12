@@ -20,20 +20,25 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
-import { onMounted, ref, defineAsyncComponent } from "@vue/runtime-core";
+import { computed, onMounted, ref } from "vue";
 
 const isLoggedIn = ref(false);
-const adress = ref("")
+const adress = ref("");
 const isMetamaskSupported = ref(false);
+
 onMounted(() => {
   isMetamaskSupported.value = typeof (window as any).ethereum !== "undefined";
 });
 
 async function connectWallet() {
-  const accounts = await (window as any).ethereum.request({ method: "eth_requestAccounts" });
-    adress.value = accounts[0];  
+  try {
+    const accounts = await (window as any).ethereum.request({ method: "eth_requestAccounts" });
+    adress.value = accounts[0];
+    isLoggedIn.value = true;
+  } catch (error) {
+    console.error("Erreur lors de la connexion au portefeuille : ", error);
+  }
 }
 
-const computedAdress = computed(() => adress.value.substring(0, 4) + "....");
+const computedAdress = computed(() => adress.value ? adress.value.substring(0, 4) + "...." : '');
 </script>
