@@ -23,9 +23,14 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref } from "vue";
-import axios from "axios";
+import { onMounted, ref } from "vue";
 import { ethers } from "ethers";
+
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
 
 const isLoggedIn = ref(false);
 const address = ref("");
@@ -106,6 +111,9 @@ const signWallet = async () => {
 
     console.log("resPost", resPost);
     const token = resPost.access_token;
+
+    //local storage
+    localStorage.setItem('accessToken', token);
     console.log("token", token);
 
   } catch (error) {
