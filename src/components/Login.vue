@@ -25,7 +25,7 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref } from "vue";
 import axios from "axios";
-import { ethers } from 'ethers';
+import { ethers } from "ethers";
 
 const isLoggedIn = ref(false);
 const address = ref("");
@@ -46,7 +46,7 @@ const connectWallet = async () => {
       isLoggedIn.value = true;
 
       // Log the address after it has been updated
-      signWallet()
+      signWallet();
     } catch (err) {
       console.error("Failed to connect to Metamask", err);
     }
@@ -55,24 +55,64 @@ const connectWallet = async () => {
 const signWallet = async () => {
   try {
     const addressWallet = address.value;
-    const apiUrl = "https://backend-quiz-dot-tools-303211.nw.r.appspot.com/auth/message";
+    const apiUrl =
+      "https://backend-quiz-dot-tools-303211.nw.r.appspot.com/auth/message";
     const response = await axios.get(`${apiUrl}/${addressWallet}`, {
       headers: {
         accept: "application/json",
       },
     });
     const message = response.data.message;
-    const sign = await window.ethereum.request({
-        method: "personal_sign",
-        params: [message, addressWallet],
-      });
-    
-      console.log(sign);
-    
 
+    const sign = await window.ethereum.request({
+      method: "personal_sign",
+      params: [message, addressWallet],
+    });
+    console.log("adresse wallet", addressWallet);
+    console.log("signature", sign);
+
+    // const apiUrl_p2 = "https://backend-quiz-dot-tools-303211.nw.r.appspot.com/auth";
+    // const response_2 = await axios.post(`${apiUrl_p2}`, {
+    //   headers: {
+    //     accept: "*/*",
+    //     'Content-Type': 'application/json'
+    //   },
+    //   data: {
+    //     "address": addressWallet,
+    //     "signature": sign,
+    //   }
+    // });
+
+    const headers: HeadersInit = {
+      Accept: "application.json",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+    };
+
+    const urlPost = new URL(
+      "https://backend-quiz-dot-tools-303211.nw.r.appspot.com/auth"
+    );
+    const payload = {
+      address: addressWallet,
+      signature: sign,
+    };
+    const post = await fetch(urlPost, {
+      method: "POST",
+      headers,
+      mode: "cors",
+      body: JSON.stringify(payload),
+      cache: "default",
+    });
+
+    const resPost = await post.json();
+
+    console.log("resPost", resPost);
+    const token = resPost.access_token;
+    console.log("token", token);
+
+    // console.log("response_2", response_2)
   } catch (error) {
     console.error(error);
   }
 };
-
 </script>
