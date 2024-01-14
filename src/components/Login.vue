@@ -113,7 +113,7 @@ const signWallet = async () => {
     const token = resPost.access_token;
 
     //local storage
-    localStorage.setItem('accessToken', token);
+    localStorage.setItem('jwt', token);
     console.log("token", token);
 
   } catch (error) {
