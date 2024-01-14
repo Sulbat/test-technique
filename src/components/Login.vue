@@ -42,7 +42,7 @@ const connectWallet = async () => {
         method: "eth_requestAccounts",
       });
 
-      address.value = accounts[0];
+      address.value = ethers.getAddress(accounts[0]);
       isLoggedIn.value = true;
 
       // Log the address after it has been updated
@@ -54,15 +54,24 @@ const connectWallet = async () => {
 };
 const signWallet = async () => {
   try {
+    const headers: HeadersInit = {
+      Accept: "application.json",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+    };
     const addressWallet = address.value;
-    const apiUrl =
-      "https://backend-quiz-dot-tools-303211.nw.r.appspot.com/auth/message";
-    const response = await axios.get(`${apiUrl}/${addressWallet}`, {
-      headers: {
-        accept: "application/json",
-      },
-    });
-    const message = response.data.message;
+    const getUrl =
+    `https://backend-quiz-dot-tools-303211.nw.r.appspot.com/auth/message/${addressWallet}`;
+    const response = await fetch(getUrl, {
+          method: "GET",
+          headers,
+          mode: "cors",
+          cache: "default",
+        });
+    const res = await response.json();
+    const message = res.message;
+    
+
 
     const sign = await window.ethereum.request({
       method: "personal_sign",
@@ -71,23 +80,12 @@ const signWallet = async () => {
     console.log("adresse wallet", addressWallet);
     console.log("signature", sign);
 
-    // const apiUrl_p2 = "https://backend-quiz-dot-tools-303211.nw.r.appspot.com/auth";
-    // const response_2 = await axios.post(`${apiUrl_p2}`, {
-    //   headers: {
-    //     accept: "*/*",
-    //     'Content-Type': 'application/json'
-    //   },
-    //   data: {
-    //     "address": addressWallet,
-    //     "signature": sign,
-    //   }
-    // });
+    // const provider = new ethers.BrowserProvider(window.ethereum);
+    // // It will prompt user for account connections if it isnt connected
+    // const signer = await provider.getSigner();
+    // console.log("Account:", await signer.getAddress());
 
-    const headers: HeadersInit = {
-      Accept: "application.json",
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-    };
+
 
     const urlPost = new URL(
       "https://backend-quiz-dot-tools-303211.nw.r.appspot.com/auth"
@@ -110,7 +108,6 @@ const signWallet = async () => {
     const token = resPost.access_token;
     console.log("token", token);
 
-    // console.log("response_2", response_2)
   } catch (error) {
     console.error(error);
   }
