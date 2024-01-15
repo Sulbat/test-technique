@@ -6,7 +6,7 @@
         v-if="isMetamaskInstalled"
         class="px-4 py-2 rounded bg-gradient-to-r from-blue-500 to-blue-600 text-gray-50 font-semibold"
       >
-        Metamask Login
+        Connect Wallet
       </button>
       <div
         v-else
@@ -15,6 +15,16 @@
         Please Install Metamask Extension
       </div>
     </div>
+
+
+    <div v-if="isLoggedIn">
+    <button
+      @click="startQuiz"
+      class="px-4 py-2 rounded bg-gradient-to-r from-blue-500 to-blue-600 text-gray-50 font-semibold"
+    >
+      Démarrer
+    </button>
+  </div>
 
     <div v-else>
       {{ address }}
@@ -37,11 +47,16 @@ declare global {
 const isLoggedIn = ref(false);
 const address = ref("");
 const isMetamaskInstalled = ref(false);
-const router = useRouter();
 
 onMounted(async () => {
   isMetamaskInstalled.value = typeof window.ethereum !== "undefined";
 });
+
+const router = useRouter();
+
+const startQuiz = () => {
+  router.push('/quizz');
+};
 
 const connectWallet = async () => {
   if (isMetamaskInstalled.value) {
@@ -119,7 +134,7 @@ const signWallet = async () => {
     localStorage.setItem('jwt', token);
     console.log("token", token);
 
-    router.push('/quizz');
+    // router.push('/quizz');
   } catch (error) {
     console.error(error);
   }
