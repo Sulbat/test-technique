@@ -5,7 +5,14 @@ export default {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'inter': ['Inter', 'sans-serif'],
+      },
+      colors: {
+        customGreen: '#00FDCF',
+      },
+    },
   },
   plugins: [],
 }

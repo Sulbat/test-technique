@@ -7,11 +7,13 @@
 <script lang="ts">
 import Login from './views/Login.vue';
 import Quizz from './views/Quizz.vue';
+import Results from './views/Results.vue'; 
 
 export default {
   components: {
     Login,
-    Quizz
+    Quizz,
+    Results
   }
 }
 </script>

@@ -24,6 +24,9 @@
     >
       Démarrer
     </button>
+    <div v-if="isLoggedIn" class="fixed top-0 right-0 text-customGreen p-4 font-inter text-xs font-normal leading-normal">
+    {{ address }}
+    </div>
   </div>
 
     <div v-else>
