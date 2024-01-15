@@ -1,11 +1,12 @@
 <template>
-  <Login />
-  <Quizz />
+  <router-view/>
+  <!-- <Login />
+  <Quizz /> -->
 </template>
 
 <script lang="ts">
-import Login from './components/Login.vue';
-import Quizz from './components/Quizz.vue';
+import Login from './views/Login.vue';
+import Quizz from './views/Quizz.vue';
 
 export default {
   components: {

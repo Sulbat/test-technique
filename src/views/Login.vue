@@ -25,6 +25,8 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 import { ethers } from "ethers";
+import { useRouter } from 'vue-router';
+
 
 declare global {
   interface Window {
@@ -35,6 +37,7 @@ declare global {
 const isLoggedIn = ref(false);
 const address = ref("");
 const isMetamaskInstalled = ref(false);
+const router = useRouter();
 
 onMounted(async () => {
   isMetamaskInstalled.value = typeof window.ethereum !== "undefined";
@@ -116,6 +119,7 @@ const signWallet = async () => {
     localStorage.setItem('jwt', token);
     console.log("token", token);
 
+    router.push('/quizz');
   } catch (error) {
     console.error(error);
   }
