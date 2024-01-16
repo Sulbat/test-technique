@@ -7,11 +7,14 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@ethersproject/contracts": "^5.7.0",
+    "@ethersproject/providers": "^5.7.2",
     "axios": "^1.6.5",
     "ethers": "^6.9.2",
     "pinia": "^2.1.7",
     "vue": "^3.2.13",
-    "vue-router": "^4.0.13"
+    "vue-router": "^4.0.13",
+    "web3": "^4.3.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-typescript": "~5.0.0",
