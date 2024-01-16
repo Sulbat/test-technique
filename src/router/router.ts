@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../views/Login.vue'
 import Quizz from '../views/Quizz.vue'
 import Results from '../views/Results.vue'
+import Oops from '../views/Oops.vue'
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: '/results',
     name: 'Results',
     component: Results
+  },
+  {
+    path: '/oops',
+    name: 'Oops',
+    component: Oops
   },
   {
     path: '/:catchAll(.*)',
