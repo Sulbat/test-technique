@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     async testContractConnection() {
-    // async mintToken() {
+      // async mintToken() {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const contractAddress = "0x367Abf44a620a3F43a7b4C34D79f15CB5fE0E92E";
       const contractABI = [
@@ -333,33 +333,30 @@ export default {
           type: "function",
         },
       ];
-            const signer = await provider.getSigner();
-            const contract = new ethers.Contract(
-              contractAddress,
-              contractABI,
-              signer
-            );
-            try {
-              try {
-                // Call the getbaseURI function
-                const baseURI = await contract.getbaseURI();
-                console.log('Base URI:', baseURI);
-              } catch (err) {
-                console.error(err);
-              }
-            } catch (err) {
-              console.error(err);
-            }
-          },
-        },
-      };
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(
+        contractAddress,
+        contractABI,
+        signer
+      );
+      try {
+        try {
+          const baseURI = await contract.getbaseURI();
+          console.log("Base URI :", baseURI);
+        } catch (err) {
+          console.error("Erreur lors de l'appel à getbaseURI :", err);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    },
+  },
+};
 
-
-        // Call the mint function
-      //   const tx = await contract.mint(/* parameters if any */);
-      //   await tx.wait();
-      //   alert("Token minted!");
-      // } catch (err) {
-      //   console.error(err);
-
+// Call the mint function
+//   const tx = await contract.mint(/* parameters if any */);
+//   await tx.wait();
+//   alert("Token minted!");
+// } catch (err) {
+//   console.error(err);
 </script>

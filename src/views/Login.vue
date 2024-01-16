@@ -1,5 +1,5 @@
 <template>
-  <div class="grid place-items-center h-96">
+    <div class="bg-[url('https://s3-alpha-sig.figma.com/img/bd1e/de1f/46ce6382d97700f160b0b0012ceda654?Expires=1706486400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ZUEOhLba-rdag94TL5FESnVzyYRtdFNX9BqlsIrEtRyBDeoCL~B-IxYpi0M99Hk2VqbSbtJokzOsR5LbC7svwzD4K0XW-LwAhCJO0RRK2s7TuUyoARuihosZpwOu9KUOG-31iIVW03DB2pBNKI4nEXkckepVZXNUJWyYXodFGx3wPjedVrhMJJOuaqfv7zrvv8D9wzduppoK7SdZJ0wwEybY5fRXGPBwVVKeoC1GRTtcqu4JOSNUCM3~OiHtyVOPN2qRQOuhtjQ0H9hg7gvl-mo-EfShkmHDlVb4wZxL0dX~5pqn7KwYmNMmFQB32Z7lKzLBrL2XShEPBJZMxr5j2w__')] bg-cover bg-no-repeat h-screen flex items-center justify-center">
     <div v-if="!isLoggedIn">
       <button
         @click="connectWallet"
