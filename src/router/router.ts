@@ -3,6 +3,7 @@ import Login from '../views/Login.vue'
 import Quizz from '../views/Quizz.vue'
 import Results from '../views/Results.vue'
 import Oops from '../views/Oops.vue'
+import test from '../views/test.vue'
 
 const routes = [
   {
@@ -25,6 +26,12 @@ const routes = [
     name: 'Oops',
     component: Oops
   },
+{
+  path: '/test',
+  name: 'test',
+  component: test
+},
+
   {
     path: '/:catchAll(.*)',
     redirect: '/login'  // Redirige vers la page de login par défaut

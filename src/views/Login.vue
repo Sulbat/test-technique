@@ -41,6 +41,8 @@ import { ethers } from "ethers";
 import { useRouter } from 'vue-router';
 
 
+
+
 declare global {
   interface Window {
     ethereum?: any;
@@ -138,8 +140,14 @@ const signWallet = async () => {
     console.log("token", token);
 
     // router.push('/quizz');
+    
   } catch (error) {
     console.error(error);
   }
+
+  
 };
+
+
+
 </script>
