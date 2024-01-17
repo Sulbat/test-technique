@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
@@ -11,6 +11,12 @@ export default {
       },
       colors: {
         customGreen: '#00FDCF',
+      },
+      boxShadow: {
+        custom: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
+      },
+      backdropFilter: {
+        'blur': 'blur(22px)',
       },
     },
   },
