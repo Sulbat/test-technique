@@ -2,28 +2,33 @@
   <div class="center-content">
     <div>
       <div class="green-rectangle">
-  <div class="counter-container">
-    {{ timeLeft.toString().padStart(4, "0") }}
-  </div>
+        <div
+  class="counter-container"
+  :class="{ 'heartbeat-animation': timeLeft <= 10 }"
+>
+  {{ timeLeft.toString().padStart(4, "0") }}
 </div>
+      </div>
       <div v-if="isLoading">Loading...</div>
       <div v-else>
         <div class="question">{{ question }}</div>
         <div class="answer-options">
-          <div v-for="(choice) in choices" :key="choice.id">
+          <div v-for="choice in choices" :key="choice.id">
             <input
               type="radio"
               :id="choice.id"
               v-model="selectedAnswer"
               :value="choice.id"
+              @click="toggleSelection(choice.id)"
             />
-
             <label :for="choice.id">{{ choice.value }}</label>
           </div>
         </div>
         <button
-          class="border-none bg-gray-500 text-white rounded-md flex flex-col items-start space-y-2 p-2 px-6"
+          class="border-none text-white rounded-md flex flex-col items-start space-y-2 p-2 px-6"
+          :class="selectedAnswer ? 'bg-blue-500' : 'bg-gray-500'"
           @click="postAnswer"
+          :disabled="!selectedAnswer"
         >
           Valider
         </button>
@@ -44,13 +49,23 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const timeLeft = ref(129999990);
+const timeLeft = ref(20);
 const question = ref("");
 const selectedAnswer = ref("");
 const questionUUID = ref("");
 const choices = ref<Array<{ id: string; value: string }>>([]);
 const token = localStorage.getItem("jwt");
 const isLoading = ref(true);
+const previousSelection = ref("");
+
+const toggleSelection = (id: string) => {
+  if (previousSelection.value === id) {
+    selectedAnswer.value = "";
+    previousSelection.value = "";
+  } else {
+    previousSelection.value = id;
+  }
+};
 
 let timer: NodeJS.Timeout;
 
@@ -166,11 +181,11 @@ onMounted(() => {
 
 .green-rectangle {
   height: 79px;
-  background: linear-gradient(90deg, #000 0%, #00FDC0 101.13%);
-  width: 100%; 
-  position: fixed; 
-  top: 4%; 
-  left: 0; 
+  background: linear-gradient(90deg, #000 0%, #00fdc0 101.13%);
+  width: 100%;
+  position: fixed;
+  top: 4%;
+  left: 0;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
@@ -224,7 +239,23 @@ button {
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-  
 }
 
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.heartbeat-animation {
+  animation: heartbeat 1s infinite;
+  color: red;
+}
 </style>
