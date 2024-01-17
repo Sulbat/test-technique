@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="header h-8 bg-black">
     <sun />
     <warning />
     <!-- <div
@@ -38,7 +38,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.header {
+/* .header {
   @apply h-[28px] flex-shrink-0 bg-black;
-}
+} */
 </style>

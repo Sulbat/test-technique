@@ -1,7 +1,11 @@
 <template>
   <div class="center-content">
+    
     <div>
       <div class="green-rectangle">
+        <div class="question">
+    Question  / 10: 
+  </div>
         <div
   class="counter-container"
   :class="{ 'heartbeat-animation': timeLeft <= 10 }"
@@ -49,7 +53,7 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const timeLeft = ref(120);
+const timeLeft = ref(999999999999);
 const question = ref("");
 const selectedAnswer = ref("");
 const questionUUID = ref("");
@@ -172,7 +176,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 95.5vh;
   width: 100%;
   flex-direction: column;
   background: var(
@@ -195,7 +199,7 @@ onMounted(() => {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding-left: 95%; /* Ajoutez un peu d'espace à gauche */
+  padding-left: 95%; 
 }
 
 .question {
@@ -260,4 +264,6 @@ button {
   animation: heartbeat 1s infinite;
   color: red;
 }
+
+
 </style>
