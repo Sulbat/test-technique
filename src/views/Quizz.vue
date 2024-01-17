@@ -49,7 +49,7 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const timeLeft = ref(20);
+const timeLeft = ref(120);
 const question = ref("");
 const selectedAnswer = ref("");
 const questionUUID = ref("");
@@ -125,6 +125,8 @@ const postAnswer = async () => {
 
     if (response.status >= 200 && response.status < 300) {
       console.log(response.data);
+      // Appeler getQuestion pour obtenir la prochaine question
+      getQuestion();
     } else {
       console.log("Response status: ", response.status);
       console.log("Response data: ", response.data);

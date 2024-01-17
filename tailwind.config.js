@@ -11,6 +11,9 @@ module.exports = {
       },
       colors: {
         customGreen: '#00FDCF',
+        accent: {
+          100: '#3C50E0',
+        },
       },
       boxShadow: {
         custom: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
