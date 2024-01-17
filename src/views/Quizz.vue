@@ -1,29 +1,39 @@
 <template>
-  <div>
-    <div v-if="isLoading">Loading...</div>
-    <div v-else>
-      <div>{{ question }}</div>
-      <div v-for="(choice, index) in choices" :key="choice.id">
-        <input
-          type="radio"
-          :id="choice.id"
-          v-model="selectedAnswer"
-          :value="choice.id"
-        />
-        <label :for="choice.id">{{ index + 1 }}. {{ choice.value }}</label>
-      </div>
-      <button
-        class="border bg-gray-600 rounded-md flex flex-col items-start space-y-2 p-2 px-6"
-        @click="postAnswer"
-      >
-        Valider
-      </button>
-      <button
+  <div class="center-content">
+    <div>
+      <div class="green-rectangle">
+  <div class="counter-container">
+    {{ timeLeft.toString().padStart(4, "0") }}
+  </div>
+</div>
+      <div v-if="isLoading">Loading...</div>
+      <div v-else>
+        <div class="question">{{ question }}</div>
+        <div class="answer-options">
+          <div v-for="(choice) in choices" :key="choice.id">
+            <input
+              type="radio"
+              :id="choice.id"
+              v-model="selectedAnswer"
+              :value="choice.id"
+            />
+
+            <label :for="choice.id">{{ choice.value }}</label>
+          </div>
+        </div>
+        <button
+          class="border-none bg-gray-500 text-white rounded-md flex flex-col items-start space-y-2 p-2 px-6"
+          @click="postAnswer"
+        >
+          Valider
+        </button>
+        <!-- <button
         class="border bg-gray-600 rounded-md flex flex-col items-start space-y-2 p-2 px-6"
         @click="quizResult"
       >
         Result
-      </button>
+      </button> -->
+      </div>
     </div>
   </div>
 </template>
@@ -31,13 +41,29 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
+const timeLeft = ref(129999990);
 const question = ref("");
 const selectedAnswer = ref("");
 const questionUUID = ref("");
 const choices = ref<Array<{ id: string; value: string }>>([]);
 const token = localStorage.getItem("jwt");
 const isLoading = ref(true);
+
+let timer: NodeJS.Timeout;
+
+const startTimer = () => {
+  timer = setInterval(() => {
+    if (timeLeft.value > 0) {
+      timeLeft.value--;
+    } else {
+      clearInterval(timer);
+      router.push("/oops");
+    }
+  }, 1000);
+};
 
 const getQuestion = async () => {
   try {
@@ -96,28 +122,109 @@ const postAnswer = async () => {
   }
 };
 
-const token2 = localStorage.getItem("jwt");
-const quizResult = async () => {
-  try {
-    console.log("quizResult");
-    const headers: HeadersInit = {
-      Authorization: `Bearer ${token2}`,
-    };
-    const getUrl = `https://backend-quiz-dot-tools-303211.nw.r.appspot.com/quiz/score`;
-    const response = await fetch(getUrl, {
-      method: "GET",
-      headers,
-      mode: "cors",
-      cache: "default",
-    });
-    const res = await response.json();
-    const message = res.message;
-    console.log("message", message);
+// const token2 = localStorage.getItem("jwt");
+// const quizResult = async () => {
+//   try {
+//     console.log("quizResult");
+//     const headers: HeadersInit = {
+//       Authorization: `Bearer ${token2}`,
+//     };
+//     const getUrl = `https://backend-quiz-dot-tools-303211.nw.r.appspot.com/quiz/score`;
+//     const response = await fetch(getUrl, {
+//       method: "GET",
+//       headers,
+//       mode: "cors",
+//       cache: "default",
+//     });
+//     const res = await response.json();
+//     const message = res.message;
+//     console.log("message", message);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-onMounted(getQuestion);
+onMounted(() => {
+  getQuestion();
+  startTimer();
+});
 </script>
+
+<style scoped>
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  flex-direction: column;
+  background: var(
+    --bg-grad,
+    linear-gradient(101deg, #000 26.95%, #2f2e44 94.54%)
+  );
+}
+
+.green-rectangle {
+  height: 79px;
+  background: linear-gradient(90deg, #000 0%, #00FDC0 101.13%);
+  width: 100%; 
+  position: fixed; 
+  top: 4%; 
+  left: 0; 
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 130%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 95%; /* Ajoutez un peu d'espace à gauche */
+}
+
+.question {
+  color: #fff;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 130%;
+  margin-bottom: 15%;
+}
+
+.answer-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  color: #fff;
+}
+
+.answer-options div {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  width: 526px;
+  height: 58px;
+  padding: 0px 16px;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid gray;
+  border-radius: 8px;
+  background: rgba(225, 241, 255, 0.2);
+}
+
+button {
+  margin: auto;
+  margin-top: 70px;
+}
+
+.counter-container {
+  width: 70px;
+  height: 50px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  
+}
+
+</style>

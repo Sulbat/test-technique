@@ -26,7 +26,6 @@
 <script lang="ts">
 import { ref, onMounted } from "vue";
 import { ethers } from "ethers";
-
 declare global {
   interface Window {
     ethereum?: any;

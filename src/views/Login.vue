@@ -88,6 +88,7 @@ const connectWallet = async () => {
 
       address.value = ethers.getAddress(accounts[0]);
       isLoggedIn.value = true;
+      localStorage.setItem('address', address.value);
 
       // Log the address after it has been updated
       signWallet();

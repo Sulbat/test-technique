@@ -8,12 +8,15 @@
 import { defineComponent } from "vue";
 import { ethers } from "ethers";
 
+
+
 export default defineComponent({
   name: "SmartContractInteraction",
   data() {
     return {
       provider: null as ethers.JsonRpcProvider | null,
       contract: null as ethers.Contract | null,
+
     };
   },
   methods: {
