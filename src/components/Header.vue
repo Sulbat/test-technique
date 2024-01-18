@@ -1,7 +1,7 @@
 <template>
   <header class="header h-8 bg-black">
     <sun />
-    <warning v-if="!address" />
+    <warning class="h-0" v-if="!address" />
     <div v-if="address">
       <div class="fixed top-0 right-[14rem] pt-3">
       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
