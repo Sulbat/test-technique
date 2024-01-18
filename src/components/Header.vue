@@ -29,18 +29,19 @@ export default defineComponent({
     Warning
   },
   setup() {
-    const address = ref<string | null>(null); // Spécifie explicitement le type de la référence
+    const address = ref('');
 
-    // Simule une mise à jour de l'adresse après 2 secondes
-    setTimeout(() => {
-      address.value = '0x123...'; // Met à jour la valeur de la référence
-    }, 2000);
+    onMounted(() => {
+      address.value = localStorage.getItem('shortenedAddress') || '';
+      
+    });
 
-    return {
-      address
-    };
+    return { address };
   }
 });
+
+
+
 </script>
 
 

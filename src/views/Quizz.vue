@@ -65,7 +65,6 @@ const questionCount = ref(1);
 
 
 
-
 const toggleSelection = (id: string) => {
   if (previousSelection.value === id) {
     selectedAnswer.value = "";
@@ -175,9 +174,16 @@ const postAnswer = async () => {
 // };
 
 onMounted(() => {
+  if (!localStorage.getItem('loaded')) {
+    localStorage.setItem('loaded', 'true');
+    window.location.reload();
+  } else {
+    localStorage.removeItem('loaded');
+  }
   getQuestion();
   startTimer();
 });
+
 </script>
 
 <style scoped>
