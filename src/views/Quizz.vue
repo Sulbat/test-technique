@@ -7,7 +7,7 @@
     Question {{ questionCount }} / 10
   </div>
         <div
-  class="counter-container"
+  class="counter-container p-2"
   :class="{ 'heartbeat-animation': timeLeft <= 10 }"
 >
   {{ timeLeft.toString().padStart(4, "0") }}
@@ -36,12 +36,6 @@
         >
           Valider
         </button>
-        <!-- <button
-        class="border bg-gray-600 rounded-md flex flex-col items-start space-y-2 p-2 px-6"
-        @click="quizResult"
-      >
-        Result
-      </button> -->
       </div>
     </div>
   </div>
@@ -53,17 +47,15 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const timeLeft = ref(120);
-const question = ref("");
-const selectedAnswer = ref("");
-const questionUUID = ref("");
+const timeLeft = ref<number>(120);
+const question = ref<string>("");
+const selectedAnswer = ref<string>("");
+const questionUUID = ref<string>("");
 const choices = ref<Array<{ id: string; value: string }>>([]);
 const token = localStorage.getItem("jwt");
-const isLoading = ref(true);
-const previousSelection = ref("");
-const questionCount = ref(1);
-
-
+const isLoading = ref<boolean>(true);
+const previousSelection = ref<string>("");
+const questionCount = ref<number>(1);
 
 const toggleSelection = (id: string) => {
   if (previousSelection.value === id) {
@@ -101,7 +93,6 @@ const getQuestion = async () => {
       question.value = response.data.label;
       questionUUID.value = response.data.id;
       choices.value = response.data.choices;
-      console.log(response.data);
     } else {
       console.log("GET request failed with status: ", response.status);
     }
@@ -114,8 +105,6 @@ const getQuestion = async () => {
 
 const postAnswer = async () => {
   try {
-    console.log("quiz_uuid: ", questionUUID.value);
-    console.log("choice_uuid: ", selectedAnswer.value);
 
     const response = await axios.post(
       "https://backend-quiz-dot-tools-303211.nw.r.appspot.com/quiz",
@@ -131,12 +120,12 @@ const postAnswer = async () => {
     );
 
     if (response.status >= 200 && response.status < 300) {
-      console.log(response.data);
+      
       // Appeler getQuestion pour obtenir la prochaine question
       getQuestion();
       questionCount.value++;
       // Si c'est la dixième question, rediriger vers /test
-      if (questionCount.value == 10) {
+      if (questionCount.value == 11) {
         router.push("/results");
       }
     } else {

@@ -23,7 +23,6 @@
             </div>
           </div>
         </div>
-
         <button
           class="bg-blue-600 text-white w-[209px] h-[42px] rounded shadow-custom mt-4"
           @click="callContractFunction"
@@ -34,28 +33,27 @@
       <div
         class="bg-white bg-opacity-15 h-[449px] w-[608px] m-4 rounded-lg px-8 shadow-md backdrop-blur text-white"
       >
-      
-      <div class="text-2xl mt-6">Détail des résultats :</div>
-<table class="table-auto rounded bg-black bg-opacity-20 mt-5">
-  <tbody>
-    <tr>
-      <td class="table-question">[Question]</td>
-      <td>15s</td>
-    </tr>
-    <tr>
-      <td class="table-question">[Question]</td>
-      <td>89s</td>
-    </tr>
-    <tr>
-      <td class="table-question">[Question]</td>
-      <td>48s</td>
-    </tr>
-    <tr>
-      <td class="table-question">[Question]</td>
-      <td>66s</td>
-    </tr>
-  </tbody>
-</table>
+        <div class="text-2xl mt-6">Détail des résultats :</div>
+        <table class="table-auto rounded bg-black bg-opacity-20 mt-5">
+          <tbody>
+            <tr>
+              <td class="table-question">[Question]</td>
+              <td>15s</td>
+            </tr>
+            <tr>
+              <td class="table-question">[Question]</td>
+              <td>89s</td>
+            </tr>
+            <tr>
+              <td class="table-question">[Question]</td>
+              <td>48s</td>
+            </tr>
+            <tr>
+              <td class="table-question">[Question]</td>
+              <td>66s</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -75,12 +73,11 @@ export default defineComponent({
   },
   methods: {
     async initializeEthers() {
-      // Connexion au fournisseur Ethereum (Infura/Alchemy)
+      // Connexion au fournisseur Ethereum (Alchemy)
       const provider = new ethers.JsonRpcProvider(
         "https://eth-goerli.g.alchemy.com/v2/qjqERS-ofZV8pO4BJ1Ul17IfLbP7_SFq"
       );
 
-      // Example usage: Get the current block number
       async function getBlockNumber() {
         const blockNumber = await provider.getBlockNumber();
         console.log("Current block number:", blockNumber);
@@ -366,7 +363,6 @@ export default defineComponent({
       ] as const;
 
       // Connexion au smart contract
-
       this.contract = new ethers.Contract(
         contractAddress,
         contractABI,
@@ -378,7 +374,7 @@ export default defineComponent({
       if (!this.contract) return;
 
       try {
-        // Appelez la fonction de votre smart contract ici
+        // Appel de la fonction du smart contract
         const result = await this.contract.name();
         console.log("Résultat de la fonction :", result);
       } catch (error) {
@@ -412,5 +408,4 @@ export default defineComponent({
 .table-question {
   padding: 10px 400px 10px 10px;
 }
-
 </style>

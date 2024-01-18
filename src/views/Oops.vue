@@ -7,8 +7,11 @@
         class="flex flex-col items-center p-0 px-8 pb-12 space-y-6 bg-white bg-opacity-15 rounded-2xl shadow-md backdrop-blur-medium"
         style="width: 608px; height: 316px"
       >
-        <h2 class="text-white text-3xl font-semibold leading-normal mt-2">Time is over !</h2>        
-        <h1 class="text-9xl text-yellow-500 ">{{ message }}</h1><br>
+        <h2 class="text-white text-3xl font-semibold leading-normal mt-2">
+          Time is over !
+        </h2>
+        <h1 class="text-9xl text-yellow-500">{{ message }}</h1>
+        <br />
         <router-link
           to="/quizz"
           class="try-again-button bg-accent-100 rounded shadow-md text-white p-2 px-6"
@@ -39,5 +42,3 @@ export default defineComponent({
   },
 });
 </script>
-
-

@@ -44,7 +44,6 @@
 
     <div v-else>
       {{ shortenAddress(address) }}
-
     </div>
   </div>
 </template>
@@ -75,13 +74,12 @@ const startQuiz = () => {
 };
 
 function shortenAddress(address: string, chars = 4) {
-  
-  if (!address) return '';
-  
-  if (typeof address !== 'string') return '';
-  
-  if (address.length < (chars * 2) + 2) return address;
-  
+  if (!address) return "";
+
+  if (typeof address !== "string") return "";
+
+  if (address.length < chars * 2 + 2) return address;
+
   return `${address.slice(0, chars)}...${address.slice(-chars)}`;
 }
 
@@ -95,9 +93,7 @@ const connectWallet = async () => {
       address.value = ethers.getAddress(accounts[0]);
       isLoggedIn.value = true;
       const shortenedAddress = shortenAddress(address.value);
-      localStorage.setItem('shortenedAddress', shortenedAddress);
-
-      
+      localStorage.setItem("shortenedAddress", shortenedAddress);
 
       // Log the address after it has been updated
       signWallet();
@@ -128,13 +124,6 @@ const signWallet = async () => {
       method: "personal_sign",
       params: [message, addressWallet],
     });
-    console.log("adresse wallet", addressWallet);
-    console.log("signature", sign);
-
-    // const provider = new ethers.BrowserProvider(window.ethereum);
-    // // It will prompt user for account connections if it isnt connected
-    // const signer = await provider.getSigner();
-    // console.log("Account:", await signer.getAddress());
 
     const urlPost = new URL(
       "https://backend-quiz-dot-tools-303211.nw.r.appspot.com/auth"
@@ -152,15 +141,10 @@ const signWallet = async () => {
     });
 
     const resPost = await post.json();
-
-    console.log("resPost", resPost);
     const token = resPost.access_token;
 
     //local storage
     localStorage.setItem("jwt", token);
-    console.log("token", token);
-
-    // router.push('/quiz');
   } catch (error) {
     console.error(error);
   }

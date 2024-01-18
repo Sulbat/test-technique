@@ -1,20 +1,16 @@
 <template>
   <Header />
   <div id="app">
-    
-  <router-view/>
+  <router-view />
   </div>
-  <!-- <Login />
-  <Quizz /> -->
 </template>
 
 <script lang="ts">
-import Login from './views/Login.vue';
-import Quizz from './views/Quizz.vue';
-import Results from './views/Results.vue'; 
-import Oops from './views/Oops.vue';
-import Header from './components/Header.vue';
-
+import Login from "./views/Login.vue";
+import Quizz from "./views/Quizz.vue";
+import Results from "./views/Results.vue";
+import Oops from "./views/Oops.vue";
+import Header from "./components/Header.vue";
 
 export default {
   components: {
@@ -22,7 +18,7 @@ export default {
     Quizz,
     Results,
     Oops,
-    Header
-  }
-}
+    Header,
+  },
+};
 </script>
