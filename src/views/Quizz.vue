@@ -132,15 +132,19 @@ const postAnswer = async () => {
     );
 
     if (response.status >= 200 && response.status < 300) {
-    console.log(response.data);
-    // Appeler getQuestion pour obtenir la prochaine question
-    getQuestion();
-    questionCount.value++;
-  } else {
-    console.log("Response status: ", response.status);
-    console.log("Response data: ", response.data);
-    console.error("Erreur lors de l'envoi de la réponse");
-  }
+      console.log(response.data);
+      // Appeler getQuestion pour obtenir la prochaine question
+      getQuestion();
+      questionCount.value++;
+      // Si c'est la dixième question, rediriger vers /test
+      if (questionCount.value == 10) {
+        router.push("/results");
+      }
+    } else {
+      console.log("Response status: ", response.status);
+      console.log("Response data: ", response.data);
+      console.error("Erreur lors de l'envoi de la réponse");
+    }
   } catch (error: any) {
     console.error(error);
     console.error(error.response);

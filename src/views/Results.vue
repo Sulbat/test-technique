@@ -1,62 +1,67 @@
 <template>
-  <div>
-    <table>
-      <thead>
-        <tr>
-          <th>Colonne 1</th>
-          <th>Colonne 2</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(result, index) in results.slice(0, 4)" :key="index">
-          <td>{{ result.col1 }}</td>
-          <td>{{ result.col2 }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <button
-      @click="testContractConnection"
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-    >
-      Mint
-    </button>
+  <div
+    class="bg-[url('https://s3-alpha-sig.figma.com/img/1e3d/fd79/f027a5a10046d6899c3bf9713b1aa78a?Expires=1706486400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=SY4iOqaSBNz-7SStmbJA~neRnPLVJyW5QInDYrMGY2dowIsewRUMm6gNpbhsu-PYuldIZQSKdyoWdaTn~Vq1cLurvUIHLuRq2FpH2Qz9xdh28hGWdpujE3Gfj069NM9ZzJy6kNAdnjfKc2Pb~7knYI-hftzQXV0aDfRloVJodLU-1TVe5ICJ8LpHtcYKqjSq8rjqV-6TTHuZDvfBXvqZigAHWBGvHXMCFa6ltPxd6G5~GkQD2u405U9f4g6vVgLkxzi1182fQIGYQJuVuFEDGJfKmMnrFyTkVB2nEtWTrJTD2wCRg7bdPpA29G-QNj2iR8t24HzW79NL9GVzLo1OhA__')] bg-cover bg-no-repeat h-screen flex items-center justify-center"
+  >
+    <div class="flex justify-center items-center h-screen space-x-6">
+      <div
+        class="bg-white bg-opacity-15 h-[449px] w-[608px] m-4 rounded-lg px-8 flex flex-col items-center shadow-md backdrop-blur"
+      >
+        <div class="">
+          <div class="end text-4xl">
+            <div class="flex justify-center">🎉<br /></div>
+            <div class="text-white">Le Quiz est terminé !<br /><br /></div>
+            <div class="flex justify-center text-custom-color stroke-text shadow-text mb-4">
+    Bravo !
+  </div>
+          </div>
+          <div class="text-white ml-8 mb-3 flex items-center">
+            Meilleur temps : XX/XX
+            <div class="bg-black text-custom-color ml-2 px-3 py-1 rounded">New!</div>
+          </div>
+        </div>
+
+        <button
+          class="bg-blue-600 text-white w-[209px] h-[42px] rounded shadow-custom mt-4"
+          @click="callContractFunction"
+        >
+          MINT MY CERTIFICATE
+        </button>
+      </div>
+      <div
+        class="bg-white bg-opacity-15 h-[449px] w-[608px] m-4 rounded-lg px-8 shadow-md backdrop-blur"
+      ></div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { ref, onMounted } from "vue";
+import { defineComponent } from "vue";
 import { ethers } from "ethers";
-declare global {
-  interface Window {
-    ethereum?: any;
-  }
-}
 
-interface Result {
-  col1: string;
-  col2: string;
-}
-
-export default {
-  setup() {
-    const results = ref<Result[]>([]);
-
-    onMounted(() => {
-      results.value = [
-        { col1: "Donnée 1", col2: "Donnée 2" },
-        { col1: "Donnée 3", col2: "Donnée 4" },
-        { col1: "Donnée 5", col2: "Donnée 6" },
-        { col1: "Donnée 7", col2: "Donnée 8" },
-      ];
-    });
-
-    return { results };
+export default defineComponent({
+  name: "SmartContractInteraction",
+  data() {
+    return {
+      provider: null as ethers.JsonRpcProvider | null,
+      contract: null as ethers.Contract | null,
+    };
   },
   methods: {
-    async testContractConnection() {
-      // async mintToken() {
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const contractAddress = "0x367Abf44a620a3F43a7b4C34D79f15CB5fE0E92E";
+    async initializeEthers() {
+      // Connexion au fournisseur Ethereum (Infura/Alchemy)
+      const provider = new ethers.JsonRpcProvider(
+        "https://eth-goerli.g.alchemy.com/v2/qjqERS-ofZV8pO4BJ1Ul17IfLbP7_SFq"
+      );
+
+      // Example usage: Get the current block number
+      async function getBlockNumber() {
+        const blockNumber = await provider.getBlockNumber();
+        console.log("Current block number:", blockNumber);
+      }
+      getBlockNumber();
+
+      // Informations du smart contract
+      const contractAddress = "0x5d2c7926525cf1174e04d60a5496363c986d3d5d";
       const contractABI = [
         { inputs: [], stateMutability: "nonpayable", type: "constructor" },
         {
@@ -331,31 +336,51 @@ export default {
           stateMutability: "nonpayable",
           type: "function",
         },
-      ];
-      const signer = await provider.getSigner();
-      const contract = new ethers.Contract(
+      ] as const;
+
+      // Connexion au smart contract
+
+      this.contract = new ethers.Contract(
         contractAddress,
         contractABI,
-        signer
+        provider
       );
+    },
+
+    async callContractFunction() {
+      if (!this.contract) return;
+
       try {
-        try {
-          const baseURI = await contract.getbaseURI();
-          console.log("Base URI :", baseURI);
-        } catch (err) {
-          console.error("Erreur lors de l'appel à getbaseURI :", err);
-        }
-      } catch (err) {
-        console.error(err);
+        // Appelez la fonction de votre smart contract ici
+        const result = await this.contract.name();
+        console.log("Résultat de la fonction :", result);
+      } catch (error) {
+        console.error(
+          "Erreur lors de l'appel de la fonction du smart contract:",
+          error
+        );
       }
     },
   },
-};
-
-// Call the mint function
-//   const tx = await contract.mint(/* parameters if any */);
-//   await tx.wait();
-//   alert("Token minted!");
-// } catch (err) {
-//   console.error(err);
+  mounted() {
+    this.initializeEthers();
+  },
+});
 </script>
+
+
+<style scoped>
+.text-custom-color {
+  color: #0AEADF; 
+}
+
+.stroke-text {
+  -webkit-text-stroke-color: rgba(0, 0, 0, 0.50);
+  -webkit-text-stroke-width: 1px;
+}
+
+.shadow-text {
+  text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.25);
+}
+
+</style>
