@@ -5,6 +5,7 @@
       height="12"
       viewBox="0 0 12 12"
       fill="none"
+      
     >
       <g clip-path="url(#clip0_102_3821)">
         <path
