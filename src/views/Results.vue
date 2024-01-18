@@ -10,13 +10,17 @@
           <div class="end text-4xl">
             <div class="flex justify-center">🎉<br /></div>
             <div class="text-white">Le Quiz est terminé !<br /><br /></div>
-            <div class="flex justify-center text-custom-color stroke-text shadow-text mb-4">
-    Bravo !
-  </div>
+            <div
+              class="flex justify-center text-custom-color stroke-text shadow-text mb-4"
+            >
+              Bravo !
+            </div>
           </div>
           <div class="text-white ml-8 mb-3 flex items-center">
             Meilleur temps : XX/XX
-            <div class="bg-black text-custom-color ml-2 px-3 py-1 rounded">New!</div>
+            <div class="bg-black text-custom-color ml-2 px-3 py-1 rounded">
+              New!
+            </div>
           </div>
         </div>
 
@@ -28,8 +32,31 @@
         </button>
       </div>
       <div
-        class="bg-white bg-opacity-15 h-[449px] w-[608px] m-4 rounded-lg px-8 shadow-md backdrop-blur"
-      ></div>
+        class="bg-white bg-opacity-15 h-[449px] w-[608px] m-4 rounded-lg px-8 shadow-md backdrop-blur text-white"
+      >
+      
+      <div class="text-2xl mt-6">Détail des résultats :</div>
+<table class="table-auto rounded bg-black bg-opacity-20 mt-5">
+  <tbody>
+    <tr>
+      <td class="table-question">[Question]</td>
+      <td>15s</td>
+    </tr>
+    <tr>
+      <td class="table-question">[Question]</td>
+      <td>89s</td>
+    </tr>
+    <tr>
+      <td class="table-question">[Question]</td>
+      <td>48s</td>
+    </tr>
+    <tr>
+      <td class="table-question">[Question]</td>
+      <td>66s</td>
+    </tr>
+  </tbody>
+</table>
+      </div>
     </div>
   </div>
 </template>
@@ -368,19 +395,22 @@ export default defineComponent({
 });
 </script>
 
-
 <style scoped>
 .text-custom-color {
-  color: #0AEADF; 
+  color: #0aeadf;
 }
 
 .stroke-text {
-  -webkit-text-stroke-color: rgba(0, 0, 0, 0.50);
+  -webkit-text-stroke-color: rgba(0, 0, 0, 0.5);
   -webkit-text-stroke-width: 1px;
 }
 
 .shadow-text {
   text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.25);
+}
+
+.table-question {
+  padding: 10px 400px 10px 10px;
 }
 
 </style>

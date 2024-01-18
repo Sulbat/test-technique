@@ -4,7 +4,7 @@
     <div>
       <div class="green-rectangle">
         <div class="questions">
-    Question {{ questionCount }} / 10: 
+    Question {{ questionCount }} / 10
   </div>
         <div
   class="counter-container"
@@ -206,7 +206,6 @@ onMounted(() => {
   font-weight: 600;
   line-height: 130%;
   display: flex;
-  /* justify-content: flex-start; */
   align-items: center; 
 }
 
