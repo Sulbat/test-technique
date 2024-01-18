@@ -53,7 +53,7 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const timeLeft = ref(999999999999);
+const timeLeft = ref(120);
 const question = ref("");
 const selectedAnswer = ref("");
 const questionUUID = ref("");
