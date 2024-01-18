@@ -43,13 +43,14 @@
           v-if="isLoggedIn"
           class="fixed top-0 right-0 text-customGreen p-4 font-inter text-xs font-normal leading-normal"
         >
-          {{ address }}
+
         </div>
       </div>
     </div>
 
     <div v-else>
-      {{ address }}
+      {{ shortenAddress(address) }}
+
     </div>
   </div>
 </template>
@@ -79,6 +80,17 @@ const startQuiz = () => {
   router.push("/quizz");
 };
 
+function shortenAddress(address: string, chars = 4) {
+  
+  if (!address) return '';
+  
+  if (typeof address !== 'string') return '';
+  
+  if (address.length < (chars * 2) + 2) return address;
+  
+  return `${address.slice(0, chars)}...${address.slice(-chars)}`;
+}
+
 const connectWallet = async () => {
   if (isMetamaskInstalled.value) {
     try {
@@ -88,7 +100,10 @@ const connectWallet = async () => {
 
       address.value = ethers.getAddress(accounts[0]);
       isLoggedIn.value = true;
-      localStorage.setItem('address', address.value);
+      const shortenedAddress = shortenAddress(address.value);
+      localStorage.setItem('shortenedAddress', shortenedAddress);
+
+      
 
       // Log the address after it has been updated
       signWallet();

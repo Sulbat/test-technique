@@ -3,8 +3,8 @@
     
     <div>
       <div class="green-rectangle">
-        <div class="question">
-    Question  / 10: 
+        <div class="questions">
+    Question {{ questionCount }} / 10: 
   </div>
         <div
   class="counter-container"
@@ -61,6 +61,10 @@ const choices = ref<Array<{ id: string; value: string }>>([]);
 const token = localStorage.getItem("jwt");
 const isLoading = ref(true);
 const previousSelection = ref("");
+const questionCount = ref(1);
+
+
+
 
 const toggleSelection = (id: string) => {
   if (previousSelection.value === id) {
@@ -128,14 +132,15 @@ const postAnswer = async () => {
     );
 
     if (response.status >= 200 && response.status < 300) {
-      console.log(response.data);
-      // Appeler getQuestion pour obtenir la prochaine question
-      getQuestion();
-    } else {
-      console.log("Response status: ", response.status);
-      console.log("Response data: ", response.data);
-      console.error("Erreur lors de l'envoi de la réponse");
-    }
+    console.log(response.data);
+    // Appeler getQuestion pour obtenir la prochaine question
+    getQuestion();
+    questionCount.value++;
+  } else {
+    console.log("Response status: ", response.status);
+    console.log("Response data: ", response.data);
+    console.error("Erreur lors de l'envoi de la réponse");
+  }
   } catch (error: any) {
     console.error(error);
     console.error(error.response);
@@ -190,16 +195,15 @@ onMounted(() => {
   background: linear-gradient(90deg, #000 0%, #00fdc0 101.13%);
   width: 100%;
   position: fixed;
-  top: 4%;
+  top: 4.5%;
   left: 0;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
   line-height: 130%;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding-left: 95%; 
+  /* justify-content: flex-start; */
+  align-items: center; 
 }
 
 .question {
@@ -209,6 +213,13 @@ onMounted(() => {
   font-weight: 600;
   line-height: 130%;
   margin-bottom: 15%;
+}
+
+.questions {
+  color: #fff;
+  text-align: left;
+  margin: 3%;
+
 }
 
 .answer-options {
@@ -242,9 +253,11 @@ button {
   height: 50px;
   background: white;
   display: flex;
-  justify-content: center;
   align-items: center;
   border-radius: 8px;
+  margin: 80%;
+
+
 }
 
 

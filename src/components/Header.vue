@@ -1,12 +1,13 @@
 <template>
+  
   <header class="header h-8 bg-black">
     <sun />
-    <warning />
-    <!-- <div
+    <warning v-if="!address"/>
+    <div
       class="fixed top-0 right-0 text-customGreen p-4 font-inter text-xs font-normal leading-normal"
     >
-      {{ address }}
-    </div> -->
+      Conncected to Goerli {{ address }}
+    </div>
   </header>
 </template>
 
@@ -22,23 +23,19 @@ export default defineComponent({
     Sun,
     Warning
   },
-  // setup() {
-  //   const address = ref('');
+  setup() {
+    const address = ref('');
 
-  //   onMounted(() => {
-  //     address.value = localStorage.getItem('address') || '';
-  //   });
+    onMounted(() => {
+      address.value = localStorage.getItem('shortenedAddress') || '';
+    });
 
-  //   return { address };
-  // }
+    return { address };
+  }
 });
 
 
 
 </script>
 
-<style scoped>
-/* .header {
-  @apply h-[28px] flex-shrink-0 bg-black;
-} */
-</style>
+
